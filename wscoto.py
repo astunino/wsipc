@@ -30,7 +30,6 @@ def buscarProductosCotoDesde(desde):
         productoDict['producto'] = pro
         productoDict['precio'] = pre
         productosArray.append(productoDict)
-        print(len(productosArray))
     return productosArray
 
 
