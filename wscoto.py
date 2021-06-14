@@ -4,12 +4,12 @@ from bs4 import BeautifulSoup
 def buscarProductosCoto():
     limite = 0
     lenAnterior = 0
-    ivicecs = buscarProductosCotoDesde(limite)
-    while (lenAnterior < len(ivicecs)):
+    productosArray = buscarProductosCotoDesde(limite)
+    while (lenAnterior < len(productosArray)):
         limite = limite + 1000
-        lenAnterior = len(ivicecs)
-        ivicecs = ivicecs + buscarProductosCotoDesde(limite)
-    return ivicecs
+        lenAnterior = len(productosArray)
+        productosArray = productosArray + buscarProductosCotoDesde(limite)
+    return productosArray
 
 
 def buscarProductosCotoDesde(desde):
@@ -18,20 +18,20 @@ def buscarProductosCotoDesde(desde):
     soup = BeautifulSoup(page.content, 'html.parser')
     productos = soup.find_all('li', class_=["clearfix"])
 
-    ivicecs = []
+    productosArray = []
     for producto in productos:
-        ivicec = {}
+        productoDict = {}
         pro = producto.find(class_="descrip_full")
         if pro is not None:
             pro=pro.get_text().replace("\n", " ").strip()
         pre = producto.find(class_="atg_store_newPrice")
         if pre is not None:
             pre=pre.get_text().replace("\n", " ").replace("PRECIO CONTADO","").strip()
-        ivicec['producto'] = pro
-        ivicec['precio'] = pre
-        ivicecs.append(ivicec)
-        print(len(ivicecs))
-    return ivicecs
+        productoDict['producto'] = pro
+        productoDict['precio'] = pre
+        productosArray.append(productoDict)
+        print(len(productosArray))
+    return productosArray
 
 
 if __name__ == '__main__':
